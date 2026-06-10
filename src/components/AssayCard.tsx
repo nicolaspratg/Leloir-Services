@@ -6,19 +6,22 @@ export default function AssayCard({ assay, area }: { assay: Assay; area: Area })
   return (
     <Link
       href={`/servicios/${area.slug}/${assay.slug}`}
-      className="group flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 transition-colors hover:border-slate-300"
+      className="group flex h-full flex-col rounded-[3px] border border-line bg-paper p-5 transition-all hover:-translate-y-0.5 hover:border-line-strong hover:bg-white hover:shadow-[0_10px_28px_-14px_rgba(20,32,46,0.22)]"
     >
-      <h3 className="text-base font-semibold leading-snug text-slate-900">
+      <h3 className="text-base font-semibold leading-snug tracking-tight text-navy">
         {assay.name}
       </h3>
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">
         {assay.useCase}
       </p>
       <span
-        className="mt-4 inline-flex items-center text-sm font-medium group-hover:underline"
+        className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium"
         style={{ color: area.accent }}
       >
-        Ver ficha →
+        Ver ficha
+        <span className="transition-transform duration-300 group-hover:translate-x-1">
+          →
+        </span>
       </span>
     </Link>
   );

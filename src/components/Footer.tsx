@@ -5,27 +5,27 @@ import { ORG, SERVICES_EMAIL } from "@/lib/site";
 
 export default function Footer() {
   return (
-    <footer className="mt-16 border-t border-slate-200 bg-slate-50">
-      <div className="mx-auto max-w-6xl px-5 py-12">
+    <footer className="mt-20 border-t border-line bg-paper-2">
+      <div className="mx-auto max-w-6xl px-5 py-14">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="text-lg font-bold text-[#1B3A5B]">{ORG.name}</p>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            <p className="font-display text-xl font-semibold text-navy">
+              {ORG.name}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-ink-soft">
               {ORG.longName}
             </p>
-            <p className="mt-1 text-sm text-slate-500">{ORG.parent}</p>
+            <p className="mt-1 text-sm text-ink-faint">{ORG.parent}</p>
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Servicios
-            </p>
-            <ul className="mt-3 space-y-2">
+            <p className="label-mono text-ink-faint">Servicios</p>
+            <ul className="mt-4 space-y-2.5">
               {areas.map((a) => (
                 <li key={a.slug}>
                   <Link
                     href={`/servicios/${a.slug}`}
-                    className="text-sm text-slate-600 hover:text-slate-900"
+                    className="font-mono text-[13px] text-ink-soft transition-colors hover:text-navy"
                   >
                     {a.code}
                   </Link>
@@ -35,18 +35,22 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Contacto
-            </p>
-            <ul className="mt-3 space-y-2 text-sm text-slate-600">
+            <p className="label-mono text-ink-faint">Contacto</p>
+            <ul className="mt-4 space-y-2.5 text-sm text-ink-soft">
               <li>
-                <a href={`mailto:${SERVICES_EMAIL}`} className="hover:text-slate-900">
+                <a
+                  href={`mailto:${SERVICES_EMAIL}`}
+                  className="transition-colors hover:text-navy"
+                >
                   {SERVICES_EMAIL}
                 </a>
               </li>
               <li>{ORG.address}</li>
               <li>
-                <Link href="/contacto" className="hover:text-slate-900">
+                <Link
+                  href="/contacto"
+                  className="transition-colors hover:text-navy"
+                >
                   Solicitar cotización
                 </Link>
               </li>
@@ -55,14 +59,12 @@ export default function Footer() {
 
           {/* Brand / institutional logos — placeholders until assets are supplied. */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Respaldo institucional
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
+            <p className="label-mono text-ink-faint">Respaldo institucional</p>
+            <div className="mt-4 flex flex-wrap gap-3">
               {["LEFIP", "Inst. Leloir", "CONICET"].map((logo) => (
                 <div
                   key={logo}
-                  className="flex h-12 w-24 items-center justify-center rounded border border-dashed border-slate-300 bg-white text-[11px] text-slate-400"
+                  className="flex h-12 w-24 items-center justify-center rounded-[3px] border border-dashed border-line-strong bg-paper font-mono text-[11px] text-ink-faint"
                 >
                   {logo}
                 </div>
@@ -73,7 +75,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="mt-10 border-t border-slate-200 pt-6 text-xs text-slate-400">
+        <p className="mt-12 border-t border-line pt-6 font-mono text-[11px] leading-relaxed text-ink-faint">
           © {new Date().getFullYear()} {ORG.name} — {ORG.parent}. Todos los
           análisis incluyen informe técnico interpretado.
         </p>

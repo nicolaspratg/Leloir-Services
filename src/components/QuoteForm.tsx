@@ -75,22 +75,28 @@ export default function QuoteForm({
 
   if (status === "success") {
     return (
-      <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-6">
-        <h2 className="text-lg font-semibold text-emerald-900">Consulta enviada</h2>
-        <p className="mt-1 text-sm text-emerald-800">
-          Recibimos tu solicitud. Respondemos en menos de 48&nbsp;horas hábiles.
+      <div
+        className="reveal rounded-[3px] border border-line bg-paper-2/60 p-7"
+        style={{ borderTop: "2px solid #0E7C7B" }}
+      >
+        <span className="label-mono text-[#0E7C7B]">Consulta enviada</span>
+        <h2 className="font-display mt-2 text-2xl font-semibold tracking-tight text-navy">
+          Recibimos tu solicitud
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+          Respondemos en menos de 48&nbsp;horas hábiles.
         </p>
       </div>
     );
   }
 
   const field =
-    "w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-400";
-  const label = "mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500";
+    "w-full rounded-[3px] border border-line bg-paper px-3 py-2.5 text-sm text-ink outline-none transition-colors focus:border-navy focus:ring-2 focus:ring-navy/15 disabled:bg-paper-2 disabled:text-ink-faint";
+  const label = "label-mono mb-1.5 block text-ink-faint";
 
   return (
     <div className="space-y-5">
-      <p className="text-sm text-slate-600">
+      <p className="rounded-[3px] border-l-2 border-navy bg-paper-2/60 px-3.5 py-2.5 text-sm text-ink-soft">
         Respondemos todas las consultas en menos de 48&nbsp;horas hábiles.
       </p>
 
@@ -188,7 +194,7 @@ export default function QuoteForm({
       </div>
 
       {status === "error" && (
-        <p className="text-sm text-red-600">
+        <p className="rounded-[3px] border-l-2 border-red-500 bg-red-50 px-3.5 py-2.5 text-sm text-red-700">
           {required
             ? "No pudimos enviar la consulta. Probá de nuevo o escribinos al e-mail de servicios."
             : "Completá los campos obligatorios (*) antes de enviar."}
@@ -198,9 +204,14 @@ export default function QuoteForm({
       <button
         onClick={handleSubmit}
         disabled={status === "submitting"}
-        className="inline-flex items-center rounded-md bg-[#1B3A5B] px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+        className="group inline-flex items-center gap-2 rounded-[3px] bg-navy px-6 py-3 text-sm font-semibold text-white shadow-[0_1px_2px_rgba(20,32,46,0.18)] transition-all hover:-translate-y-px hover:shadow-[0_4px_14px_rgba(20,32,46,0.22)] disabled:translate-y-0 disabled:opacity-60 disabled:shadow-none"
       >
         {status === "submitting" ? "Enviando…" : "Solicitar cotización"}
+        {status !== "submitting" && (
+          <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+            →
+          </span>
+        )}
       </button>
     </div>
   );

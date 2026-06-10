@@ -10,13 +10,16 @@ export const metadata: Metadata = {
 
 export default function ServiciosPage() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-12 sm:py-16">
-      <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">Servicios</h1>
-      <p className="mt-2 max-w-2xl text-sm text-slate-600">
+    <div className="mx-auto max-w-6xl px-5 py-14 sm:py-20">
+      <span className="label-mono text-ink-faint">Catálogo de servicios</span>
+      <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
+        Servicios
+      </h1>
+      <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-ink-soft">
         Cuatro áreas de servicio. Cada ensayo se cotiza por proyecto e incluye un
         informe técnico interpretado.
       </p>
-      <div className="mt-8 grid gap-5 sm:grid-cols-2">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2">
         {areas.map((area) => (
           <AreaCard key={area.slug} area={area} />
         ))}

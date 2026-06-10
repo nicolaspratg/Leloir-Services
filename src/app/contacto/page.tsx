@@ -15,15 +15,16 @@ export default async function ContactoPage(
   const assay = typeof sp.assay === "string" ? sp.assay : "";
 
   return (
-    <div className="mx-auto max-w-2xl px-5 py-12 sm:py-16">
-      <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+    <div className="mx-auto max-w-2xl px-5 py-14 sm:py-20">
+      <span className="label-mono text-ink-faint">Contacto</span>
+      <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
         Solicitar cotización
       </h1>
-      <p className="mt-2 text-sm text-slate-600">
+      <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
         Contanos sobre tu proyecto. El presupuesto se cotiza por proyecto e
         incluye informe técnico con interpretación.
       </p>
-      <div className="mt-8">
+      <div className="mt-10">
         <QuoteForm defaultArea={area} defaultAssay={assay} />
       </div>
     </div>

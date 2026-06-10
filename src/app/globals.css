@@ -1,20 +1,121 @@
 @import "tailwindcss";
 
-/* Light, scientific palette. No dark-mode auto-switch: the site is white-first. */
+/*
+  LEFIP design system — "instrument-grade scientific editorial".
+  Light, white-first, warmed to paper. No dark-mode auto-switch.
+  Fonts: Fraunces (display) · IBM Plex Sans (body) · IBM Plex Mono (data).
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a; /* slate-900 */
+  --paper: #fbfaf7; /* warm near-white */
+  --paper-2: #f4f2ec; /* faint panel fill */
+  --ink: #14202e; /* deep cool ink for body text */
+  --ink-soft: #4a5867; /* muted ink */
+  --ink-faint: #8a96a3; /* labels / captions */
+  --navy: #1b3a5b; /* brand base — nav, headings */
+  --line: rgba(20, 32, 46, 0.12); /* hairline borders */
+  --line-strong: rgba(20, 32, 46, 0.22);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-mono-jb), ui-monospace, SFMono-Regular, monospace;
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-navy: var(--navy);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv05";
+}
+
+::selection {
+  background: #1b3a5b;
+  color: #fbfaf7;
+}
+
+/* Display headings: Fraunces, tightened, optical low-contrast feel. */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+
+/* Small monospaced index/eyebrow label used across sections. */
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* --- Atmosphere ------------------------------------------------------- */
+
+/* Faint engineering grid for light sections. */
+.grid-paper {
+  background-image:
+    linear-gradient(to right, rgba(20, 32, 46, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 32, 46, 0.04) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* Blueprint grid + accent glow over the dark navy hero. */
+.grid-blueprint {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* --- Motion: one restrained, staggered load reveal -------------------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.reveal-1 {
+  animation-delay: 0.05s;
+}
+.reveal-2 {
+  animation-delay: 0.14s;
+}
+.reveal-3 {
+  animation-delay: 0.23s;
+}
+.reveal-4 {
+  animation-delay: 0.32s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-1,
+  .reveal-2,
+  .reveal-3,
+  .reveal-4 {
+    animation: none;
+  }
 }

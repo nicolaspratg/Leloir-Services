@@ -6,25 +6,29 @@ import QuoteButton from "./QuoteButton";
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <nav className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3">
-        <Link href="/" className="flex items-baseline gap-2">
-          <span className="text-lg font-bold tracking-tight text-[#1B3A5B]">
+    <header className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur">
+      <nav className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3.5">
+        <Link href="/" className="group flex items-baseline gap-2.5">
+          <span className="font-display text-xl font-semibold tracking-tight text-navy">
             {ORG.name}
           </span>
-          <span className="hidden text-xs text-slate-500 sm:inline">
+          <span className="hidden label-mono text-ink-faint sm:inline">
             Servicios analíticos
           </span>
         </Link>
 
-        <div className="ml-auto hidden items-center gap-5 md:flex">
+        <div className="ml-auto hidden items-center gap-6 md:flex">
           {areas.map((a) => (
             <Link
               key={a.slug}
               href={`/servicios/${a.slug}`}
-              className="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
+              className="group relative font-mono text-[13px] text-ink-soft transition-colors hover:text-navy"
             >
               {a.code}
+              <span
+                className="absolute -bottom-1 left-0 h-px w-0 transition-all duration-300 group-hover:w-full"
+                style={{ backgroundColor: a.accent }}
+              />
             </Link>
           ))}
         </div>

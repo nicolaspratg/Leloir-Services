@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LEFIP — Sitio de servicios
 
-## Getting Started
+Landing de servicios para **LEFIP** (Laboratorio de Estructura-Función e
+Ingeniería de Proteínas, Fundación Instituto Leloir / CONICET). Su único objetivo
+es derivar clientes de la industria a una solicitud de cotización personalizada.
 
-First, run the development server:
+Cuatro áreas de servicio — **BioAnalytix, RegAnalytics, MAbFactory, SpectroID** —
+sobre una navegación de 3 niveles: Home → Área → Ficha de ensayo → Formulario.
+
+## Stack
+
+Next.js (App Router) · TypeScript · Tailwind CSS.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # desarrollo local (http://localhost:3000)
+npm run build   # build de producción
+npm run start   # servir el build
+npm run lint    # ESLint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editar el contenido (sin tocar componentes)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`src/lib/content.ts` es la **única fuente de verdad**. Las 4 áreas y los ~24
+ensayos son datos tipados; las páginas se generan desde 3 plantillas.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Agregar un ensayo:** añadí un objeto al array `assays` con su `areaSlug`.
+  Su página L2, su entrada en el sitemap y su opción en el formulario aparecen
+  automáticamente.
+- **Agregar/editar un área:** editá el array `areas`. Cada área tiene `slug`,
+  `code` (nombre de marca), `name`, `tagline`, `description`, `sectors[]` y un
+  `accent` (color hex). MAbFactory además lleva `process[]` (timeline STAN-FIL).
+- **Campos de la ficha opcionales** (equipamiento, muestra, normas, tiempo de
+  respuesta): si no tienen valor, simplemente se omiten; la ficha solo renderiza
+  los campos presentes, en orden fijo.
 
-## Learn More
+Textos institucionales (email, dirección, equipamiento, "¿Por qué LEFIP?") están
+en `src/lib/site.ts`.
 
-To learn more about Next.js, take a look at the following resources:
+## Configuración (variables de entorno)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Copiá `.env.example` a `.env.local` y completá:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Variable | Para qué |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | URL base para metadata, sitemap y JSON-LD. |
+| `NEXT_PUBLIC_SERVICES_EMAIL` | Inbox que recibe las cotizaciones. **TODO: confirmar** — el doc usaba `servicios@inis.org.ar` pero el lab está en Instituto Leloir. |
+| `RESEND_API_KEY` + `RESEND_FROM` | Envío de email desde `/api/quote` vía Resend (requiere dominio verificado). |
+| `NEXT_PUBLIC_FORMSPREE_ID` | Solo si usás el fallback sin backend (ver abajo). |
 
-## Deploy on Vercel
+### Entrega de leads
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+El formulario hace `POST` a `/api/quote`, que envía el email vía la API HTTP de
+Resend. **Si no hay `RESEND_API_KEY` configurada, el lead se registra en los logs
+del servidor y la solicitud igual responde OK** (el formulario nunca se rompe),
+pero no se entrega por email hasta configurar Resend.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Fallback sin backend (mismo día):** si el DNS del dominio aún no está listo,
+podés apuntar el `fetch` de `src/components/QuoteForm.tsx` a un endpoint de
+[Formspree](https://formspree.io) en lugar de `/api/quote`. Funciona con export
+estático y no requiere backend.
+
+## Deploy
+
+Recomendado: [Vercel](https://vercel.com). Importá el repo, cargá las variables
+de entorno y deploy. El route handler `/api/quote` funciona en Vercel sin
+configuración extra.
+
+## Fuera de alcance (MVP)
+
+Versión en inglés · formulario formal de pedido/orden · blog / notas técnicas ·
+CMS · testimonios · listados de directorios · **mostrar precios** (la cotización
+es siempre personalizada).
+
+## Pendientes a confirmar con el cliente
+
+- **Inbox de servicios:** placeholder `servicios@inis.org.ar` (ver `site.ts`).
+- **Nombres de marca de las áreas** (BioAnalytix, etc.): confirmar si son visibles
+  para clientes pharma/regulatorios o son etiquetas internas.
+- **Sección de publicaciones / PubMed** y link a ResearchGate (fase 2).
